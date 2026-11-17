@@ -293,16 +293,17 @@ function build(k){
  const cpl=plats.filter(p=>p.z<=hi&&p.z>lo),FC=[0xe84a6a,0xf2a03a,0xf5e04a,0xd860d8,0xffffff,0x6a8af0,0xff7a4a],DC=[0xf2a03a,0xf5e04a,0xe84a6a],fl=[],mu=[],mb=[],ic=[];
  const edge=(p,k)=>{const a=rnd()*6.283,rr=.5+.45*rnd();return[p.x+Math.cos(a)*(p.w/2-.25)*rr,p.z+Math.sin(a)*(p.d/2-.25)*rr]};
  for(const p of cpl){
-  if(p.ph===1)for(let k=0;k<5;k++){const e=edge(p);fl.push({x:e[0],y:p.y+.04,z:e[1],h:.4+rnd()*.7,sz:.14+rnd()*.12,col:FC[(rnd()*FC.length)|0],dir:1})}
-  else if(p.ph===0)for(let k=0;k<2;k++){const e=edge(p);fl.push({x:e[0],y:p.y+.04,z:e[1],h:.25+rnd()*.35,sz:.1+rnd()*.08,col:DC[(rnd()*3)|0],dir:1})}
-  else if(p.ph===2)for(let k=0;k<3;k++){const e=edge(p);mu.push({x:e[0],y:p.y+.04,z:e[1],h:.25+rnd()*.35,r:.14+rnd()*.14,col:[0x40ffd0,0x8affb0,0xb090ff][(rnd()*3)|0]})}
-  else if(p.ph===3)for(let k=0;k<3;k++){const e=edge(p);ic.push({x:e[0],y:p.y+.04,z:e[1],L:.25+rnd()*.4})}
-  else if(p.ph===4)for(let k=0;k<4;k++){const e=edge(p);mb.push({x:e[0],y:p.y+.04,z:e[1],h:.3+rnd()*.5,sz:.13+rnd()*.1,col:[0x7aa0ff,0xb08aff,0x8affff][(rnd()*3)|0],dir:1})}}
- for(let i=0;i<26;i++){const q=zq();if(bi(q)===1)fl.push({x:cx(q)+(rnd()-.5)*24,y:26.8,z:q,h:2+rnd()*3.5,sz:.2+rnd()*.12,col:[0xb060e0,0xe070b0,0xffffff][(rnd()*3)|0],dir:-1})}
+  if(p.ph===1)for(let k=0;k<5;k++){const e=edge(p);fl.push({x:e[0],y:p.y+.04,z:e[1],h:.18+rnd()*.22,sz:.2+rnd()*.12,col:FC[(rnd()*FC.length)|0],dir:1})}
+  else if(p.ph===0)for(let k=0;k<2;k++){const e=edge(p);fl.push({x:e[0],y:p.y+.04,z:e[1],h:.12+rnd()*.16,sz:.15+rnd()*.08,col:DC[(rnd()*3)|0],dir:1})}
+      else if(p.ph===4)for(let k=0;k<4;k++){const e=edge(p);mb.push({x:e[0],y:p.y+.04,z:e[1],h:.15+rnd()*.2,sz:.18+rnd()*.1,col:[0x7aa0ff,0xb08aff,0x8affff][(rnd()*3)|0],dir:1})}}
+ for(let i=0;i<26;i++){const q=zq();if(bi(q)===1)fl.push({x:cx(q)+(rnd()-.5)*24,y:26.8,z:q,h:1+rnd()*1.4,sz:.26+rnd()*.12,col:[0xb060e0,0xe070b0,0xffffff][(rnd()*3)|0],dir:-1})}
  const flw=(list,stemM,headM)=>{
-  J(gs.vine,stemM,list.length,(o,i,m,c)=>{const f=list[i];o.position.set(f.x,f.y+f.dir*f.h/2,f.z);o.scale.set(1.6,f.h,1.6);m.setColorAt(c,cl(0x3f7a3a,.15))});
-  J(gs.ico,headM,list.length,(o,i,m,c)=>{const f=list[i];o.position.set(f.x,f.y+f.dir*f.h,f.z);o.scale.set(f.sz,f.sz*.55,f.sz);o.rotation.set(rnd()*.5,rnd()*3,rnd()*.5);m.setColorAt(c,new T.Color(f.col).offsetHSL(0,0,(rnd()-.5)*.08))});
-  J(gs.ico,headM,list.length,(o,i,m,c)=>{const f=list[i];o.position.set(f.x,f.y+f.dir*f.h+f.sz*.25,f.z);o.scale.set(f.sz*.4,f.sz*.4,f.sz*.4);m.setColorAt(c,new T.Color(0xffd84a))})};
+  J(gs.vine,stemM,list.length,(o,i,m,c)=>{const f=list[i];o.position.set(f.x,f.y+f.dir*f.h/2,f.z);o.scale.set(1.2,f.h,1.2);m.setColorAt(c,cl(0x3f7a3a,.15))});
+  J(gs.ico,stemM,list.length,(o,i,m,c)=>{const f=list[i],a=i*2.4;o.rotation.order='YXZ';o.position.set(f.x+Math.cos(a)*f.sz*.5,f.y+f.dir*f.h*.35,f.z+Math.sin(a)*f.sz*.5);o.rotation.set(0,-a,f.dir*.5);o.scale.set(f.sz*.55,f.sz*.12,f.sz*.25);m.setColorAt(c,cl(0x4a8a3a,.15))});
+  J(gs.ico,headM,list.length*5,(o,i,m,c)=>{const f=list[(i/5)|0],a=(i%5)*1.2566+((i/5|0)*2.399);o.rotation.order='YXZ';
+   o.position.set(f.x+Math.cos(a)*f.sz*.5,f.y+f.dir*(f.h+f.sz*.12),f.z+Math.sin(a)*f.sz*.5);o.rotation.set(0,-a,f.dir*.4);o.scale.set(f.sz*.62,f.sz*.14,f.sz*.34);
+   m.setColorAt(c,new T.Color(f.col).offsetHSL(0,0,(rnd()-.5)*.1))});
+  J(gs.ico,headM,list.length,(o,i,m,c)=>{const f=list[i];o.position.set(f.x,f.y+f.dir*(f.h+f.sz*.2),f.z);o.scale.set(f.sz*.3,f.sz*.26,f.sz*.3);m.setColorAt(c,new T.Color(0xffd84a))})};
  flw(fl,leaf,leaf);flw(mb,leaf,bloomM);
  J(gs.cyl,leaf,mu.length,(o,i,m,c)=>{const f=mu[i];o.position.set(f.x,f.y+f.h/2,f.z);o.scale.set(.05,f.h,.05);m.setColorAt(c,new T.Color(0xdfe8e0))});
  J(gs.ico,mushM,mu.length,(o,i,m,c)=>{const f=mu[i];o.position.set(f.x,f.y+f.h,f.z);o.scale.set(f.r,f.r*.55,f.r);m.setColorAt(c,new T.Color(f.col))});
